@@ -288,3 +288,215 @@ int main()
 
 ![image](https://github.com/Taylor-Lai/2024090914022-laiyika-CS-04/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-10-24%20212304.png)
 
+### 封装大数四则运算
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 128
+
+int compare(char* num1, char* num2) 
+{
+    int len1 = strlen(num1);
+    int len2 = strlen(num2);
+    if (len1 < len2) return -1;
+    if (len1 > len2) return 1;
+    return strcmp(num1, num2);
+}
+
+
+char* jia(char* num1, char* num2) 
+{
+    int len1 = strlen(num1);
+    int len2 = strlen(num2);
+    int maxLen = (len1 > len2)? len1 : len2;
+    int carry = 0;
+    char* result = (char*)malloc((maxLen + 2) * sizeof(char));
+    int i = len1 - 1;
+    int j = len2 - 1;
+    int k = 0;
+    while (i >= 0 || j >= 0 || carry > 0) 
+    {
+        int digit1 = (i >= 0)? num1[i] - '0' : 0;
+        int digit2 = (j >= 0)? num2[j] - '0' : 0;
+        int sum = digit1 + digit2 + carry;
+        carry = sum / 10;
+        result[k] = sum % 10 + '0';
+        k++;
+        i--;
+        j--;
+    }
+    result[k] = '\0';
+    int left = 0;
+    int right = k - 1;
+    while (left < right) 
+    {
+        char temp = result[left];
+        result[left] = result[right];
+        result[right] = temp;
+        left++;
+        right--;
+    }
+    return result;
+}
+
+char* jian(char* num1, char* num2) 
+{
+    int sign = 1;
+    if (compare(num1, num2) < 0) 
+    {
+        char* temp = num1;
+        num1 = num2;
+        num2 = temp;
+        sign = -1;
+    }
+    int len1 = strlen(num1);
+    int len2 = strlen(num2);
+    int borrow = 0;
+    char* result = (char*)malloc((len1 + 1) * sizeof(char));
+    int i = len1 - 1;
+    int j = len2 - 1;
+    int k = 0;
+    while (i >= 0 || j >= 0) 
+    {
+        int digit1 = (i >= 0)? num1[i] - '0' : 0;
+        int digit2 = (j >= 0)? num2[j] - '0' : 0;
+        int diff = digit1 - digit2 - borrow;
+        if (diff < 0) 
+        {
+            diff += 10;
+            borrow = 1;
+        } 
+        else 
+        {
+            borrow = 0;
+        }
+        result[k] = diff + '0';
+        k++;
+        i--;
+        j--;
+    }
+
+    while (k > 1 && result[k - 1] == '0') k--;
+    result[k] = '\0';
+    if (sign == -1) 
+    {
+        char* newResult = (char*)malloc((k + 2) * sizeof(char));
+        newResult[0] = '-';
+        strcpy(newResult + 1, result);
+        free(result);
+        return newResult;
+    }
+    return result;
+}
+
+char* cheng(char* num1, char* num2) 
+{
+    int len1 = strlen(num1);
+    int len2 = strlen(num2);
+    char* result = (char*)malloc((len1 + len2 + 1) * sizeof(char));
+    for (int i = 0; i < len1 + len2; i++) result[i] = '0';
+    {
+    result[len1 + len2] = '\0';
+    }
+    for (int i = len1 - 1; i >= 0; i--) 
+    {
+        int carry = 0;
+        for (int j = len2 - 1; j >= 0; j--) 
+        {
+            int digit1 = num1[i] - '0';
+            int digit2 = num2[j] - '0';
+            int sum = (result[i + j + 1] - '0') + digit1 * digit2 + carry;
+            carry = sum / 10;
+            result[i + j + 1] = sum % 10 + '0';
+        }
+        if (carry > 0) result[i] = carry + '0';
+    }
+
+    int k = 0;
+    while (k < len1 + len2 && result[k] == '0') k++;
+    if (k == len1 + len2) 
+    return "0";
+    char* finalResult = (char*)malloc((len1 + len2 - k + 1) * sizeof(char));
+    strcpy(finalResult, result + k);
+    free(result);
+    return 
+    finalResult;
+}
+
+char* chu(char* num1, char* num2) 
+{
+    if (strcmp(num2, "0") == 0) 
+    {
+        printf("错误\n");
+        return NULL;
+    }
+    int sign = 1;
+    if (compare(num1, num2) < 0) 
+    {
+        sign = -1;
+        return "0";
+    } 
+    else if (compare(num1, num2) == 0) return "1";
+    char* quotient = (char*)malloc((MAX + 1) * sizeof(char));
+    char* remainder = (char*)malloc((MAX + 1) * sizeof(char));
+    strcpy(remainder, num1);
+    int quotientIndex = 0;
+    while (compare(remainder, num2) >= 0) 
+    {
+        char* subResult = jian(remainder, num2);
+        free(remainder);
+        remainder = subResult;
+        quotient[quotientIndex++] = '1';
+    }
+    quotient[quotientIndex] = '\0';
+    if (sign == -1) 
+    {
+        char* newQuotient = (char*)malloc((quotientIndex + 2) * sizeof(char));
+        newQuotient[0] = '-';
+        strcpy(newQuotient + 1, quotient);
+        free(quotient);
+        return newQuotient;
+    }
+    return quotient;
+}
+
+int main() 
+{
+    char first[MAX + 1];
+    char second[MAX + 1];
+    char a;
+    printf("请输入第一个数字：");
+    scanf("%s", first);
+    printf("请输入运算符（+、-、*、/）：");
+    scanf(" %c", &a);
+    printf("请输入第二个数字：");
+    scanf("%s", second);
+    char* result;
+    switch (a) 
+    {
+    case '+':
+        result = jia(first, second);
+        break;
+    case '-':
+        result = jian(first, second);
+        break;
+    case '*':
+        result = cheng(first, second);
+        break;
+    case '/':
+        result = chu(first, second);
+        break;
+    default:
+        printf("错了\n");
+        return 1;
+    }
+    printf("结果为：%s\n", result);
+    free(result);
+    return 0;
+}
+```
+
+![image](https://github.com/Taylor-Lai/2024090914022-laiyika-CS-04/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-10-24%20212733.png)
+
