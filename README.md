@@ -7,3 +7,23 @@
 3.提取负号，再根据负号个数，决定实际运算类型。比如说，(-1)+2实际可以看为2-1。然后就可以类似正数处理。
 ## 初步实现大数运算
 ### 尝试储存大数
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+#define MAX 128
+
+int main() 
+{
+    char largeNumber[MAX + 1];
+    printf("请输入一个数字：");
+    scanf("%s", largeNumber);
+
+    printf("输入的数字为：%s\n", largeNumber);
+
+    return 0;
+}
+```
+![image](
