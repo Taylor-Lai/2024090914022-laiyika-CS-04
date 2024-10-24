@@ -241,3 +241,50 @@ int main()
 
 ![image](https://github.com/Taylor-Lai/2024090914022-laiyika-CS-04/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-10-24%20191705.png)
 
+### 从表达式中提取操作数和操作符
+```c
+#include <stdio.h>
+
+#define MAX 100
+
+void get(char *in, char *front, char *behind, char *mid) 
+{
+    int i = 0, j = 0;
+
+    while (in[i]!= '+' && in[i]!= '-' && in[i]!= '*' && in[i]!= '/') 
+    {
+        front[j++] = in[i++];
+    }
+    front[j] = '\0';
+
+    mid[0] = in[i];
+    mid[1] = '\0';
+
+    j = 0;
+    i++;
+    while (in[i]!= '\0') 
+    {
+        behind[j++] = in[i++];
+    }
+    behind[j] = '\0';
+}
+
+int main() 
+{
+    char in[MAX];
+    char front[MAX];
+    char behind[MAX];
+    char mid[2];
+
+    printf("请输入表达式: ");
+    scanf("%s", in);
+    get(in, front,behind, mid);
+    printf("操作数1: %s\n", front);
+    printf("操作数2: %s\n", behind);
+    printf("操作符: %s\n", mid);
+    return 0;
+}
+```
+
+![image](https://github.com/Taylor-Lai/2024090914022-laiyika-CS-04/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-10-24%20212304.png)
+
