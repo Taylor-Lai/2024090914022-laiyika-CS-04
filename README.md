@@ -29,5 +29,61 @@ int main()
 ![image](https://github.com/Taylor-Lai/2024090914022-laiyika-CS-04/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-10-24%20183334.png)
 
 ### 实现大数加法
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 128
+
+char* add(char* num1,char* num2)
+{
+    int len1 = strlen(num1);
+    int len2 = strlen(num2);
+    int maxLen = (len1 > len2)? len1 : len2;
+    int carry = 0;
+    char* result = (char*)malloc((maxLen + 1) * sizeof(char));
+    int i = len1 - 1;
+    int j = len2 - 1;
+    int k = 0;
+    while (i >= 0 || j >= 0 || carry > 0) 
+    {
+        int digit1 = (i >= 0)? num1[i] - '0' : 0;
+        int digit2 = (j >= 0)? num2[j] - '0' : 0;
+        int sum = digit1 + digit2 + carry;
+        carry = sum / 10;
+        result[k] = sum % 10 + '0';
+        k++;
+        i--;
+        j--;
+    }
+    result[k] = '\0';
+    int left= 0;
+    int right = k - 1;
+    while (left < right) 
+    {
+        char temp = result[left];
+        result[left] = result[right];
+        result[right] = temp;
+        left++;
+        right--;
+    }
+    return result;
+}
+
+int main() 
+{
+    char largeNumber1[MAX + 1];
+    char largeNumber2[MAX + 1];
+    printf("请输入第一个数字：");
+    scanf("%s", largeNumber1);
+    printf("请输入第二个数字：");
+    scanf("%s", largeNumber2);
+    char* sum = add(largeNumber1, largeNumber2);
+    printf("两数之和为：%s\n", sum);
+    free(sum);
+    return 0;
+}
+```
 
 
