@@ -10,7 +10,7 @@
 ### 尝试储存大数
 ```c
 #include <stdio.h>
-#include<string.h>
+#include <string.h>
 
 #define MAX 128
 
@@ -72,13 +72,13 @@ char* add(char* num1,char* num2)
 
 int main() 
 {
-    char largeNumber1[MAX + 1];
-    char largeNumber2[MAX + 1];
+    char a[MAX + 1];
+    char b[MAX + 1];
     printf("请输入第一个数字：");
-    scanf("%s", largeNumber1);
+    scanf("%s", a);
     printf("请输入第二个数字：");
-    scanf("%s", largeNumber2);
-    char* sum = add(largeNumber1, largeNumber2);
+    scanf("%s", b);
+    char* sum = add(a, b);
     printf("两数之和为：%s\n", sum);
     free(sum);
     return 0;
