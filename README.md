@@ -111,7 +111,7 @@ char* removefuhao(char* num)
 char* addfuhao(char* result) 
 {
     int len = strlen(result);
-    char* newResult = (char*)malloc((len + 2) * sizeof(char));
+    char* newResult = (char*)malloc((len + 1） * sizeof(char));
     newResult[0] = '-';
     strcpy(newResult + 1, result);
     return newResult;
