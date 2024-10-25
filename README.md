@@ -396,8 +396,9 @@ char* cheng(char* num1, char* num2)
     int len1 = strlen(num1);
     int len2 = strlen(num2);
     char* result = (char*)malloc((len1 + len2 + 1) * sizeof(char));
-    for (int i = 0; i < len1 + len2; i++) result[i] = '0';
+    for (int i = 0; i < len1 + len2; i++) 
     {
+    result[i] = '0';
     result[len1 + len2] = '\0';
     }
     for (int i = len1 - 1; i >= 0; i--) 
@@ -405,17 +406,19 @@ char* cheng(char* num1, char* num2)
         int carry = 0;
         for (int j = len2 - 1; j >= 0; j--) 
         {
-            int digit1 = num1[i] - '0';
-            int digit2 = num2[j] - '0';
-            int sum = (result[i + j + 1] - '0') + digit1 * digit2 + carry;
+            int x = num1[i] - '0';
+            int y = num2[j] - '0';
+            int sum = (result[i + j + 1] - '0') + x * y + carry;
             carry = sum / 10;
             result[i + j + 1] = sum % 10 + '0';
         }
-        if (carry > 0) result[i] = carry + '0';
+        if (carry > 0)
+        result[i] = carry + '0';
     }
 
     int k = 0;
-    while (k < len1 + len2 && result[k] == '0') k++;
+    while (k < len1 + len2 && result[k] == '0')
+    k++;
     if (k == len1 + len2) 
     return "0";
     char* z = (char*)malloc((len1 + len2 - k + 1) * sizeof(char));
