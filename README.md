@@ -418,11 +418,11 @@ char* cheng(char* num1, char* num2)
     while (k < len1 + len2 && result[k] == '0') k++;
     if (k == len1 + len2) 
     return "0";
-    char* finalResult = (char*)malloc((len1 + len2 - k + 1) * sizeof(char));
-    strcpy(finalResult, result + k);
+    char* z = (char*)malloc((len1 + len2 - k + 1) * sizeof(char));
+    strcpy(z, result + k);
     free(result);
     return 
-    finalResult;
+    z;
 }
 
 char* chu(char* num1, char* num2) 
@@ -433,13 +433,15 @@ char* chu(char* num1, char* num2)
         return NULL;
     }
     int sign = 1;
+
     if (compare(num1, num2) < 0) 
     {
         sign = -1;
         return "0";
     } 
-    else if (compare(num1, num2) == 0) return "1";
-    char* quotient = (char*)malloc((MAX + 1) * sizeof(char));
+    else if (compare(num1, num2) == 0)
+    return "1";
+    char* shang = (char*)malloc((MAX + 1) * sizeof(char));
     char* remainder = (char*)malloc((MAX + 1) * sizeof(char));
     strcpy(remainder, num1);
     int quotientIndex = 0;
@@ -448,9 +450,9 @@ char* chu(char* num1, char* num2)
         char* subResult = jian(remainder, num2);
         free(remainder);
         remainder = subResult;
-        quotient[quotientIndex++] = '1';
+        shang[quotientIndex++] = '1';
     }
-    quotient[quotientIndex] = '\0';
+    shang[quotientIndex] = '\0';
     if (sign == -1) 
     {
         char* newQuotient = (char*)malloc((quotientIndex + 2) * sizeof(char));
@@ -489,7 +491,7 @@ int main()
         result = chu(first, second);
         break;
     default:
-        printf("错了\n");
+        printf("错误\n");
         return 1;
     }
     printf("结果为：%s\n", result);
