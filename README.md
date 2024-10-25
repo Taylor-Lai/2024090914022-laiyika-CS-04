@@ -10,6 +10,7 @@
 ### 尝试储存大数
 ```c
 #include <stdio.h>
+#include<string.h>
 
 #define MAX 128
 
