@@ -116,7 +116,7 @@ char* addfuhao(char* result)
     return a;
 }
 
-int compareAbs(char* num1,char* num2) 
+int compareabs(char* num1,char* num2) 
 {
     int if1 = If(num1);
     int if2 = If(num2);
@@ -156,7 +156,7 @@ char* add(char* num1, char* num2)
     else if (if1) 
     {
         char* abs1 = removefuhao(num1);
-        int x = compareAbs(abs1, num2);
+        int x = compareabs(abs1, num2);
         if (x == 0) 
         return "0";
         if (x == 1) 
@@ -174,7 +174,7 @@ char* add(char* num1, char* num2)
     else if (if2) 
     {
         char* abs2 = removefuhao(num2);
-        int x = compareAbs(num1, abs2);
+        int x = compareabs(num1, abs2);
         if (x == 0) 
         return "0";
         if (x == 1) 
@@ -361,31 +361,32 @@ char* jian(char* num1, char* num2)
     {
         int digit1 = (i >= 0)? num1[i] - '0' : 0;
         int digit2 = (j >= 0)? num2[j] - '0' : 0;
-        int diff = digit1 - digit2 - borrow;
-        if (diff < 0) 
+        int x = digit1 - digit2 - borrow;
+        if (x < 0) 
         {
-            diff += 10;
+            x += 10;
             borrow = 1;
         } 
         else 
         {
             borrow = 0;
         }
-        result[k] = diff + '0';
+        result[k] = x + '0';
         k++;
         i--;
         j--;
     }
 
-    while (k > 1 && result[k - 1] == '0') k--;
+    while (k > 1 && result[k - 1] == '0')
+    k--;
     result[k] = '\0';
     if (sign == -1) 
     {
-        char* newResult = (char*)malloc((k + 2) * sizeof(char));
-        newResult[0] = '-';
-        strcpy(newResult + 1, result);
+        char* y = (char*)malloc((k + 2) * sizeof(char));
+        y[0] = '-';
+        strcpy(y + 1, result);
         free(result);
-        return newResult;
+        return y;
     }
     return result;
 }
