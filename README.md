@@ -104,18 +104,18 @@ int If(char* num)
 
 char* removefuhao(char* num) 
 {
-    char* result = (char*)malloc((strlen(num)) * sizeof(char));
-    strcpy(result, num + 1);
-    return result;
+    char* a= (char*)malloc((strlen(num)) * sizeof(char));
+    strcpy(a, num + 1);
+    return a;
 }
 
 char* addfuhao(char* result) 
 {
     int len = strlen(result);
-    char* newResult = (char*)malloc((len + 1） * sizeof(char));
-    newResult[0] = '-';
-    strcpy(newResult + 1, result);
-    return newResult;
+    char* a = (char*)malloc((len + 1） * sizeof(char));
+    a[0] = '-';
+    strcpy(a+ 1, result);
+    return a;
 }
 
 int compareAbs(char* num1,char* num2) 
